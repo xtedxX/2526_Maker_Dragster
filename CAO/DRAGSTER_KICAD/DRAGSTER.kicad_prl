@@ -32,7 +32,6 @@
       "vias",
       "footprint_anchors",
       "ratsnest",
-      "grid",
       "footprints_front",
       "footprints_back",
       "tracks",
@@ -48,7 +47,7 @@
       "shapes"
     ],
     "visible_layers": "ffffffff_ffffffff_ffffffff_ffffffff",
-    "zone_display_mode": 1
+    "zone_display_mode": 0
   },
   "git": {
     "repo_type": "",
@@ -89,18 +88,18 @@
       11
     ],
     "col_widths": [
-      162,
-      147,
-      102,
-      99,
-      101,
-      132,
-      98,
-      103,
-      91,
-      91,
-      91,
-      91
+      48,
+      43,
+      30,
+      29,
+      30,
+      39,
+      29,
+      31,
+      27,
+      27,
+      27,
+      27
     ],
     "custom_group_rules": [],
     "expanded_rows": [],
