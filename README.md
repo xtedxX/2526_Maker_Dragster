@@ -571,8 +571,13 @@ $ACK,BURST,DONE
 **Display Layout:**
 ```
 +--------------------+
+<<<<<<< HEAD
 | Speed:   87.3 km/h |   ← Row 0: Current speed
 | Peak:   102.5 km/h |   ← Row 1: Peak speed
+=======
+| Speed:   87.3 km/h |   ← Row 0: live speed
+| Peak:   102.5 km/h |   ← Row 1: peak speed
+>>>>>>> 1699efb08746e8a34779ea627717d9797a7f7c8d
 +--------------------+
 ```
 
@@ -856,6 +861,7 @@ BLDC Motor (3000 kV, 11.1V)
 
 ---
 
+<<<<<<< HEAD
 ## 🚀 Future Improvements
 
 ### Hardware v2
@@ -887,3 +893,6 @@ BLDC Motor (3000 kV, 11.1V)
 ---
 
 *Built with precision and passion for embedded systems engineering* 🏎️⚡
+=======
+*Built with ❤️ for the Maker Option*
+>>>>>>> 1699efb08746e8a34779ea627717d9797a7f7c8d
