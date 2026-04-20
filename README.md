@@ -343,10 +343,10 @@ Drives the TC1602A 16×2 LCD in **4-bit mode** using GPIO bit-banging with `HAL_
 
 **Display layout during operation:**
 ```
-+------------------+
++--------------------+
 | Speed:   87.3 km/h |   ← Row 0: live speed
 | Peak:   102.5 km/h |   ← Row 1: peak speed
-+------------------+
++--------------------+
 ```
 
 Speed is computed by trapezoidal integration of the X-axis acceleration: `v += (a₀ + a₁) / 2 × Δt`, then converted to km/h.
