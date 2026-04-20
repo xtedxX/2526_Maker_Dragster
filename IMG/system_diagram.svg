@@ -1,0 +1,192 @@
+<svg width="100%" viewBox="0 0 680 620" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Dragster System Diagram</title>
+<desc>Block diagram showing the dragster's main board with STM32 microcontroller, peripheral sensors, power distribution, and communication links to Bluetooth control</desc>
+
+<style>
+  .t { font-family: sans-serif; font-size: 14px; fill: #3d3d3a; }
+  .ts { font-family: sans-serif; font-size: 12px; fill: #73726c; }
+  .th { font-family: sans-serif; font-size: 14px; font-weight: 500; fill: #3d3d3a; }
+  .arr { stroke: #73726c; stroke-width: 1.5; fill: none; }
+  .c-gray rect, .c-gray circle { fill: #F1EFE8; stroke: #5F5E5A; }
+  .c-gray .th, .c-gray .t { fill: #444441; }
+  .c-gray .ts { fill: #5F5E5A; }
+  .c-purple rect { fill: #EEEDFE; stroke: #534AB7; }
+  .c-purple .th, .c-purple .t { fill: #26215C; }
+  .c-purple .ts { fill: #534AB7; }
+  .c-teal rect { fill: #E1F5EE; stroke: #0F6E56; }
+  .c-teal .th, .c-teal .t { fill: #04342C; }
+  .c-teal .ts { fill: #0F6E56; }
+  .c-blue rect { fill: #E6F1FB; stroke: #185FA5; }
+  .c-blue .th, .c-blue .t { fill: #042C53; }
+  .c-blue .ts { fill: #185FA5; }
+  .c-coral rect { fill: #FAECE7; stroke: #993C1D; }
+  .c-coral .th, .c-coral .t { fill: #4A1B0C; }
+  .c-coral .ts { fill: #993C1D; }
+  .c-pink rect { fill: #FBEAF0; stroke: #993556; }
+  .c-pink .th, .c-pink .t { fill: #4B1528; }
+  .c-pink .ts { fill: #993556; }
+  .c-green rect { fill: #EAF3DE; stroke: #3B6D11; }
+  .c-green .th, .c-green .t { fill: #173404; }
+  .c-green .ts { fill: #3B6D11; }
+  .c-amber rect { fill: #FAEEDA; stroke: #854F0B; }
+  .c-amber .th, .c-amber .t { fill: #412402; }
+  .c-amber .ts { fill: #854F0B; }
+  @media (prefers-color-scheme: dark) {
+    .t { fill: #c2c0b6; }
+    .ts { fill: #9c9a92; }
+    .th { fill: #e8e6dc; }
+    .c-gray rect, .c-gray circle { fill: #444441; stroke: #D3D1C7; }
+    .c-gray .th, .c-gray .t { fill: #F1EFE8; }
+    .c-gray .ts { fill: #D3D1C7; }
+    .c-purple rect { fill: #3C3489; stroke: #CECBF6; }
+    .c-purple .th, .c-purple .t { fill: #EEEDFE; }
+    .c-purple .ts { fill: #CECBF6; }
+    .c-teal rect { fill: #085041; stroke: #9FE1CB; }
+    .c-teal .th, .c-teal .t { fill: #E1F5EE; }
+    .c-teal .ts { fill: #9FE1CB; }
+    .c-blue rect { fill: #0C447C; stroke: #B5D4F4; }
+    .c-blue .th, .c-blue .t { fill: #E6F1FB; }
+    .c-blue .ts { fill: #B5D4F4; }
+    .c-coral rect { fill: #712B13; stroke: #F5C4B3; }
+    .c-coral .th, .c-coral .t { fill: #FAECE7; }
+    .c-coral .ts { fill: #F5C4B3; }
+    .c-pink rect { fill: #72243E; stroke: #F4C0D1; }
+    .c-pink .th, .c-pink .t { fill: #FBEAF0; }
+    .c-pink .ts { fill: #F4C0D1; }
+    .c-green rect { fill: #27500A; stroke: #C0DD97; }
+    .c-green .th, .c-green .t { fill: #EAF3DE; }
+    .c-green .ts { fill: #C0DD97; }
+    .c-amber rect { fill: #633806; stroke: #FAC775; }
+    .c-amber .th, .c-amber .t { fill: #FAEEDA; }
+    .c-amber .ts { fill: #FAC775; }
+  }
+</style>
+
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#73726c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Title -->
+<text class="th" x="340" y="30" text-anchor="middle">System Diagram</text>
+
+<!-- DRAGSTER MAIN BOARD Container -->
+<g class="c-gray">
+  <rect x="50" y="80" width="450" height="420" rx="16" stroke-width="0.5"/>
+  <text class="th" x="275" y="110" text-anchor="middle">DRAGSTER Main Board</text>
+</g>
+
+<!-- Accelerometer -->
+<g class="c-teal">
+  <rect x="70" y="140" width="120" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="130" y="160" text-anchor="middle" dominant-baseline="central">MMA8452Q</text>
+  <text class="ts" x="130" y="178" text-anchor="middle" dominant-baseline="central">Accelerometer</text>
+</g>
+
+<!-- LCD Display -->
+<g class="c-teal">
+  <rect x="210" y="140" width="120" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="270" y="160" text-anchor="middle" dominant-baseline="central">TC1602A</text>
+  <text class="ts" x="270" y="178" text-anchor="middle" dominant-baseline="central">LCD 16×2</text>
+</g>
+
+<!-- NeoPixel LED -->
+<g class="c-pink">
+  <rect x="350" y="140" width="120" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="410" y="160" text-anchor="middle" dominant-baseline="central">WS2812B</text>
+  <text class="ts" x="410" y="178" text-anchor="middle" dominant-baseline="central">RGB LED</text>
+</g>
+
+<!-- STM32 Microcontroller -->
+<g class="c-purple">
+  <rect x="170" y="240" width="200" height="64" rx="8" stroke-width="0.5"/>
+  <text class="th" x="270" y="260" text-anchor="middle" dominant-baseline="central">STM32G431CBU6</text>
+  <text class="ts" x="270" y="278" text-anchor="middle" dominant-baseline="central">ARM Cortex-M4 @ 170 MHz</text>
+  <text class="ts" x="270" y="293" text-anchor="middle" dominant-baseline="central">Emitter</text>
+</g>
+
+<!-- I2C connections -->
+<line x1="130" y1="196" x2="130" y2="220" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="110" y="214" text-anchor="end">I²C</text>
+
+<!-- GPIO connections -->
+<line x1="270" y1="196" x2="270" y2="240" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="286" y="220" text-anchor="start">GPIO</text>
+
+<!-- PWM to NeoPixel -->
+<line x1="380" y1="196" x2="340" y2="220" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="360" y="214">PWM</text>
+
+<!-- Bluetooth Module -->
+<g class="c-blue">
+  <rect x="70" y="360" width="120" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="130" y="380" text-anchor="middle" dominant-baseline="central">HC-05</text>
+  <text class="ts" x="130" y="398" text-anchor="middle" dominant-baseline="central">Bluetooth 2.0</text>
+</g>
+
+<!-- UART connection -->
+<line x1="170" y1="290" x2="130" y2="360" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="145" y="330" text-anchor="middle">UART</text>
+
+<!-- ESC -->
+<g class="c-coral">
+  <rect x="350" y="360" width="120" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="410" y="380" text-anchor="middle" dominant-baseline="central">Razer ESC</text>
+  <text class="ts" x="410" y="398" text-anchor="middle" dominant-baseline="central">PWM Control</text>
+</g>
+
+<!-- PWM to ESC -->
+<line x1="340" y1="290" x2="380" y2="360" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="365" y="330" text-anchor="middle">PWM</text>
+
+<!-- Power -->
+<g class="c-amber">
+  <rect x="210" y="430" width="120" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="270" y="450" text-anchor="middle" dominant-baseline="central">Buck Conv.</text>
+  <text class="ts" x="270" y="468" text-anchor="middle" dominant-baseline="central">7.4V → 5V/3.3V</text>
+</g>
+
+<!-- Power to STM32 -->
+<line x1="270" y1="430" x2="270" y2="304" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="250" y="370">3.3V</text>
+
+<!-- Battery -->
+<g class="c-green">
+  <rect x="210" y="540" width="120" height="44" rx="8" stroke-width="0.5"/>
+  <text class="th" x="270" y="562" text-anchor="middle" dominant-baseline="central">LiPo 3S (11.1V)</text>
+</g>
+
+<!-- Battery to Buck -->
+<line x1="270" y1="540" x2="270" y2="486" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="285" y="515">7.4V</text>
+
+<!-- BLDC Motor -->
+<g class="c-coral">
+  <rect x="550" y="360" width="110" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="605" y="380" text-anchor="middle" dominant-baseline="central">BLDC Motor</text>
+  <text class="ts" x="605" y="398" text-anchor="middle" dominant-baseline="central">3000 kV</text>
+</g>
+
+<!-- ESC to Motor -->
+<line x1="470" y1="388" x2="550" y2="388" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="510" y="404">3-phase</text>
+
+<!-- Phone/PC Control -->
+<g class="c-blue">
+  <rect x="550" y="80" width="110" height="64" rx="8" stroke-width="0.5"/>
+  <text class="th" x="605" y="100" text-anchor="middle" dominant-baseline="central">Phone / PC</text>
+  <text class="ts" x="605" y="118" text-anchor="middle" dominant-baseline="central">Bluetooth</text>
+  <text class="ts" x="605" y="133" text-anchor="middle" dominant-baseline="central">Terminal</text>
+</g>
+
+<!-- Bluetooth wireless -->
+<path d="M 190 388 L 250 388 Q 270 388 270 368 L 270 140 Q 270 120 290 120 L 520 120 Q 540 120 540 120 L 550 112" 
+      fill="none" stroke="#378ADD" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+<text class="ts" x="380" y="115" text-anchor="middle">BT 2.4 GHz</text>
+
+<!-- JTAG -->
+<rect x="400" y="245" width="60" height="20" rx="4" fill="none" stroke="#73726c" stroke-width="0.5" stroke-dasharray="2 2"/>
+<text class="ts" x="430" y="258" text-anchor="middle" font-size="10">JTAG</text>
+
+</svg>
