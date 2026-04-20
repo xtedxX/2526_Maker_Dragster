@@ -895,4 +895,3 @@ BLDC Motor (3000 kV, 11.1V)
 *Built with precision and passion for embedded systems engineering* 🏎️⚡
 =======
 *Built with ❤️ for the Maker Option*
->>>>>>> 1699efb08746e8a34779ea627717d9797a7f7c8d
