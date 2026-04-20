@@ -1,0 +1,10 @@
+../Core/Src/bldc_esc.c:12:13:prv_SetCompare	16	static
+../Core/Src/bldc_esc.c:25:17:prv_PctToPulse	24	static
+../Core/Src/bldc_esc.c:35:16:prv_PulseToPct	24	static
+../Core/Src/bldc_esc.c:47:6:ESC_Init	24	static
+../Core/Src/bldc_esc.c:76:6:ESC_SetThrottlePct	16	static
+../Core/Src/bldc_esc.c:83:6:ESC_SetPulse	16	static
+../Core/Src/bldc_esc.c:90:6:ESC_Stop	16	static
+../Core/Src/bldc_esc.c:97:6:ESC_RampTo	32	static
+../Core/Src/bldc_esc.c:122:13:ESC_GetState	16	static
+../Core/Src/bldc_esc.c:127:9:ESC_GetThrottlePct	16	static

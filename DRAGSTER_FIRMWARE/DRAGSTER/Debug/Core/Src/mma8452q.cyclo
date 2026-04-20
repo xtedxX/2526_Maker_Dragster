@@ -1,0 +1,10 @@
+../Core/Src/mma8452q.c:41:26:prv_WriteReg	2
+../Core/Src/mma8452q.c:59:26:prv_ReadRegs	2
+../Core/Src/mma8452q.c:81:14:prv_ComputeSensitivity	3
+../Core/Src/mma8452q.c:96:19:MMA8452Q_Init	9
+../Core/Src/mma8452q.c:166:19:MMA8452Q_ReadRawX	2
+../Core/Src/mma8452q.c:195:19:MMA8452Q_ReadAccelX	2
+../Core/Src/mma8452q.c:210:6:MMA8452Q_IsDataReady	2
+../Core/Src/mma8452q.c:225:19:MMA8452Q_Standby	2
+../Core/Src/mma8452q.c:241:19:MMA8452Q_Active	2
+../Core/Src/mma8452q.c:257:19:MMA8452Q_Reset	2
