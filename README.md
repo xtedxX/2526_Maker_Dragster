@@ -879,9 +879,9 @@ BLDC Motor (3000 kV, 11.1V)
 ---
 
 **School:** ENSEA — Maker Option Project  
-**Academic Year:** 2024–2025  
+**Academic Year:** 2025-2026  
 **Target MCU:** STM32G431CBU6 @ 170 MHz  
-**Development Tools:** STM32CubeIDE, KiCad 8.0, Onshape  
+**Development Tools:** STM32CubeIDE, KiCad 9.0, Onshape  
 **Control Interface:** Tera Term (Windows) / Serial Bluetooth Terminal (Android)  
 
 ---
