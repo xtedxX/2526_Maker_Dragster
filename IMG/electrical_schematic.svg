@@ -1,6 +1,6 @@
 <svg width="100%" viewBox="0 0 680 600" role="img" xmlns="http://www.w3.org/2000/svg">
 <title>Dragster Electrical Schematic</title>
-<desc>Electrical schematic showing power distribution and signal connections</desc>
+<desc>Electrical schematic showing power distribution from ESC BEC and signal connections</desc>
 
 <style>
   .t { font-family: sans-serif; font-size: 14px; fill: #3d3d3a; }
@@ -71,143 +71,128 @@
   <text class="ts" x="110" y="98" text-anchor="middle" dominant-baseline="central">11.1V 2200mAh</text>
 </g>
 
-<!-- Power Rails (Top) -->
-<g class="c-amber">
-  <rect x="200" y="60" width="100" height="56" rx="8" stroke-width="0.5"/>
-  <text class="th" x="250" y="80" text-anchor="middle" dominant-baseline="central">Buck Conv.</text>
-  <text class="ts" x="250" y="98" text-anchor="middle" dominant-baseline="central">Würth 173950378</text>
+<!-- ESC with BEC (Top Center) -->
+<g class="c-coral">
+  <rect x="200" y="60" width="140" height="70" rx="8" stroke-width="0.5"/>
+  <text class="th" x="270" y="80" text-anchor="middle" dominant-baseline="central">Razer Ten ESC</text>
+  <text class="ts" x="270" y="98" text-anchor="middle" dominant-baseline="central">60A + Built-in BEC</text>
+  <text class="ts" x="270" y="113" text-anchor="middle" dominant-baseline="central">Outputs: 5V @ 3A</text>
 </g>
 
-<line x1="160" y1="88" x2="200" y2="88" class="arr" marker-end="url(#arrow)"/>
+<!-- Battery to ESC -->
+<line x1="160" y1="88" x2="200" y2="88" stroke="#639922" stroke-width="2.5" marker-end="url(#arrow)"/>
 <text class="ts" x="180" y="80" text-anchor="middle">11.1V</text>
 
+<!-- Voltage Regulator (Top Right) -->
 <g class="c-amber">
-  <rect x="340" y="60" width="80" height="44" rx="8" stroke-width="0.5"/>
-  <text class="th" x="380" y="82" text-anchor="middle" dominant-baseline="central">5V Rail</text>
+  <rect x="380" y="60" width="140" height="70" rx="8" stroke-width="0.5"/>
+  <text class="th" x="450" y="80" text-anchor="middle" dominant-baseline="central">Würth 173950378</text>
+  <text class="ts" x="450" y="98" text-anchor="middle" dominant-baseline="central">Voltage Regulator</text>
+  <text class="ts" x="450" y="113" text-anchor="middle" dominant-baseline="central">5V → 3.3V</text>
 </g>
 
-<line x1="300" y1="88" x2="340" y2="82" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="320" y="80" text-anchor="middle">5V 3A</text>
+<!-- 5V from ESC BEC to Regulator -->
+<line x1="340" y1="95" x2="380" y2="95" stroke="#FA9F27" stroke-width="2" marker-end="url(#arrow)"/>
+<text class="ts" x="360" y="88" text-anchor="middle">5V BEC</text>
 
+<!-- 3.3V Rail indicator -->
 <g class="c-amber">
-  <rect x="460" y="60" width="80" height="56" rx="8" stroke-width="0.5"/>
-  <text class="th" x="500" y="80" text-anchor="middle" dominant-baseline="central">LDO</text>
-  <text class="ts" x="500" y="98" text-anchor="middle" dominant-baseline="central">5V→3.3V</text>
+  <rect x="560" y="60" width="80" height="44" rx="8" stroke-width="0.5"/>
+  <text class="th" x="600" y="82" text-anchor="middle" dominant-baseline="central">3.3V Logic</text>
 </g>
 
-<line x1="420" y1="82" x2="460" y2="88" class="arr" marker-end="url(#arrow)"/>
-
-<g class="c-amber">
-  <rect x="580" y="60" width="80" height="44" rx="8" stroke-width="0.5"/>
-  <text class="th" x="620" y="82" text-anchor="middle" dominant-baseline="central">3.3V Logic</text>
-</g>
-
-<line x1="540" y1="88" x2="580" y2="82" class="arr" marker-end="url(#arrow)"/>
+<line x1="520" y1="95" x2="560" y2="82" stroke="#FA9F27" stroke-width="2" marker-end="url(#arrow)"/>
 
 <!-- STM32 (Center) -->
 <g class="c-purple">
-  <rect x="240" y="180" width="200" height="70" rx="8" stroke-width="0.5"/>
-  <text class="th" x="340" y="205" text-anchor="middle" dominant-baseline="central">STM32G431CBU6</text>
-  <text class="ts" x="340" y="223" text-anchor="middle" dominant-baseline="central">ARM Cortex-M4 @ 170 MHz</text>
-  <text class="ts" x="340" y="238" text-anchor="middle" dominant-baseline="central">Main Controller</text>
+  <rect x="240" y="200" width="200" height="70" rx="8" stroke-width="0.5"/>
+  <text class="th" x="340" y="225" text-anchor="middle" dominant-baseline="central">STM32G431CBU6</text>
+  <text class="ts" x="340" y="243" text-anchor="middle" dominant-baseline="central">ARM Cortex-M4 @ 170 MHz</text>
+  <text class="ts" x="340" y="258" text-anchor="middle" dominant-baseline="central">Main Controller</text>
 </g>
 
-<!-- Power to STM32 -->
-<path d="M 620 104 L 620 140 L 340 140 L 340 180" fill="none" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
-<text class="ts" x="480" y="135" font-size="10">3.3V Power</text>
+<!-- 3.3V Power to STM32 -->
+<path d="M 600 104 L 600 160 L 340 160 L 340 200" fill="none" stroke="#FA9F27" stroke-width="2" marker-end="url(#arrow)"/>
+<text class="ts" x="470" y="155" font-size="11">3.3V Power</text>
 
-<!-- Accelerometer (Top Left Sensor) -->
+<!-- Accelerometer (Left) -->
 <g class="c-teal">
-  <rect x="60" y="300" width="120" height="56" rx="8" stroke-width="0.5"/>
-  <text class="th" x="120" y="320" text-anchor="middle" dominant-baseline="central">MMA8452Q</text>
-  <text class="ts" x="120" y="338" text-anchor="middle" dominant-baseline="central">Accelerometer</text>
+  <rect x="60" y="320" width="120" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="120" y="340" text-anchor="middle" dominant-baseline="central">MMA8452Q</text>
+  <text class="ts" x="120" y="358" text-anchor="middle" dominant-baseline="central">Accelerometer</text>
 </g>
 
-<line x1="240" y1="230" x2="180" y2="328" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="210" y="280" text-anchor="middle" font-size="11">I²C1</text>
+<line x1="240" y1="250" x2="180" y2="348" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="210" y="300" text-anchor="middle" font-size="11">I²C1</text>
 
 <!-- LCD (Top Right Sensor) -->
 <g class="c-teal">
-  <rect x="500" y="300" width="120" height="56" rx="8" stroke-width="0.5"/>
-  <text class="th" x="560" y="320" text-anchor="middle" dominant-baseline="central">TC1602A</text>
-  <text class="ts" x="560" y="338" text-anchor="middle" dominant-baseline="central">LCD 16×2</text>
+  <rect x="500" y="200" width="120" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="560" y="220" text-anchor="middle" dominant-baseline="central">TC1602A</text>
+  <text class="ts" x="560" y="238" text-anchor="middle" dominant-baseline="central">LCD 16×2</text>
 </g>
 
-<line x1="440" y1="230" x2="500" y2="328" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="470" y="280" text-anchor="middle" font-size="11">GPIO 4-bit</text>
+<line x1="440" y1="228" x2="500" y2="228" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="470" y="223" text-anchor="middle" font-size="11">GPIO</text>
 
 <!-- NeoPixel (Right Sensor) -->
 <g class="c-teal">
-  <rect x="500" y="380" width="120" height="44" rx="8" stroke-width="0.5"/>
-  <text class="th" x="560" y="402" text-anchor="middle" dominant-baseline="central">WS2812B LED ⚠️</text>
+  <rect x="500" y="280" width="120" height="44" rx="8" stroke-width="0.5"/>
+  <text class="th" x="560" y="302" text-anchor="middle" dominant-baseline="central">WS2812B LED ⚠️</text>
 </g>
 
-<line x1="440" y1="215" x2="500" y2="402" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="470" y="310" text-anchor="middle" font-size="11">TIM2 PWM</text>
+<line x1="440" y1="250" x2="500" y2="302" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="470" y="277" text-anchor="middle" font-size="11">TIM2 PWM</text>
 
 <!-- Bluetooth (Bottom Left) -->
 <g class="c-blue">
-  <rect x="60" y="380" width="120" height="56" rx="8" stroke-width="0.5"/>
-  <text class="th" x="120" y="400" text-anchor="middle" dominant-baseline="central">HC-05</text>
-  <text class="ts" x="120" y="418" text-anchor="middle" dominant-baseline="central">Bluetooth 2.0</text>
+  <rect x="60" y="400" width="120" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="120" y="420" text-anchor="middle" dominant-baseline="central">HC-05</text>
+  <text class="ts" x="120" y="438" text-anchor="middle" dominant-baseline="central">Bluetooth 2.0</text>
 </g>
 
-<line x1="240" y1="240" x2="180" y2="408" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="210" y="325" text-anchor="middle" font-size="11">USART2</text>
+<line x1="240" y1="260" x2="180" y2="428" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="210" y="345" text-anchor="middle" font-size="11">USART2</text>
 
 <!-- External Phone/PC -->
 <g class="c-blue">
-  <rect x="60" y="460" width="120" height="44" rx="8" stroke-width="0.5"/>
-  <text class="th" x="120" y="482" text-anchor="middle" dominant-baseline="central">Phone / PC</text>
+  <rect x="60" y="480" width="120" height="44" rx="8" stroke-width="0.5"/>
+  <text class="th" x="120" y="502" text-anchor="middle" dominant-baseline="central">Phone / PC</text>
 </g>
 
-<line x1="120" y1="436" x2="120" y2="460" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="140" y="450" font-size="10">BT Wireless</text>
+<line x1="120" y1="456" x2="120" y2="480" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="140" y="470" font-size="10">BT Wireless</text>
 
-<!-- ESC (Bottom Center) -->
-<g class="c-coral">
-  <rect x="240" y="380" width="110" height="56" rx="8" stroke-width="0.5"/>
-  <text class="th" x="295" y="400" text-anchor="middle" dominant-baseline="central">Razer ESC</text>
-  <text class="ts" x="295" y="418" text-anchor="middle" dominant-baseline="central">60A PWM</text>
-</g>
-
-<line x1="320" y1="250" x2="295" y2="380" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="290" y="315" text-anchor="end" font-size="11">TIM3 PWM</text>
+<!-- PWM to ESC -->
+<path d="M 270 130 L 270 200" fill="none" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="ts" x="285" y="165" font-size="11">TIM3 PWM</text>
 
 <!-- BLDC Motor (Bottom Right) -->
 <g class="c-coral">
-  <rect x="380" y="380" width="110" height="56" rx="8" stroke-width="0.5"/>
-  <text class="th" x="435" y="400" text-anchor="middle" dominant-baseline="central">BLDC Motor</text>
-  <text class="ts" x="435" y="418" text-anchor="middle" dominant-baseline="central">3000 kV</text>
+  <rect x="380" y="400" width="110" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="435" y="420" text-anchor="middle" dominant-baseline="central">BLDC Motor</text>
+  <text class="ts" x="435" y="438" text-anchor="middle" dominant-baseline="central">3000 kV</text>
 </g>
 
-<line x1="350" y1="408" x2="380" y2="408" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="365" y="403" text-anchor="middle" font-size="10">3-phase</text>
-
-<!-- Battery Direct to ESC -->
-<path d="M 110 116 L 110 150 Q 110 160 120 160 L 220 160 Q 230 160 230 170 L 230 380" 
-      fill="none" stroke="#639922" stroke-width="2" marker-end="url(#arrow)"/>
-<text class="ts" x="180" y="155" font-size="11">11.1V Direct Power</text>
+<!-- ESC to Motor (3-phase motor wires) -->
+<path d="M 270 130 L 270 380 L 380 380 L 380 400" fill="none" stroke="#D85A30" stroke-width="2" marker-end="url(#arrow)"/>
+<text class="ts" x="325" y="375" font-size="11">3-phase Motor Wires</text>
 
 <!-- Battery to Motor (via ESC) -->
-<path d="M 295 436 L 295 450 Q 295 460 305 460 L 425 460 Q 435 460 435 450 L 435 436" 
-      fill="none" stroke="#639922" stroke-width="2" marker-end="url(#arrow)"/>
-<text class="ts" x="360" y="472" font-size="10">11.1V Motor Power</text>
+<path d="M 110 116 L 110 360 L 435 360 L 435 400" fill="none" stroke="#639922" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text class="ts" x="275" y="355" font-size="11">11.1V Motor Power (via ESC)</text>
 
-<!-- Debug/Programming -->
+<!-- Debug Interface -->
 <g class="c-gray">
-  <rect x="280" y="300" width="120" height="40" rx="6" stroke-width="0.5"/>
-  <text class="ts" x="340" y="315" text-anchor="middle" dominant-baseline="central">Debug Interface</text>
-  <text class="ts" x="340" y="330" text-anchor="middle" dominant-baseline="central">JTAG/SWD + USART1</text>
+  <rect x="280" y="320" width="120" height="40" rx="6" stroke-width="0.5"/>
+  <text class="ts" x="340" y="335" text-anchor="middle" dominant-baseline="central">Debug Interface</text>
+  <text class="ts" x="340" y="350" text-anchor="middle" dominant-baseline="central">JTAG/SWD + USART1</text>
 </g>
 
-<line x1="340" y1="250" x2="340" y2="300" stroke="#73726c" stroke-width="1" stroke-dasharray="2 2"/>
+<line x1="340" y1="270" x2="340" y2="320" stroke="#73726c" stroke-width="1" stroke-dasharray="2 2"/>
 
 <!-- Ground -->
-<rect x="60" y="540" width="560" height="3" fill="#73726c"/>
-<text class="ts" x="340" y="560" text-anchor="middle">Common Ground (GND)</text>
-
-<!-- Notes -->
-<text class="ts" x="340" y="580" text-anchor="middle" font-size="10">All digital signals at 3.3V logic level</text>
+<rect x="60" y="560" width="560" height="3" fill="#73726c"/>
+<text class="ts" x="340" y="580" text-anchor="middle">Common Ground (GND)</text>
 
 </svg>

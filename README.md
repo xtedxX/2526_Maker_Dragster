@@ -47,8 +47,8 @@ The dragster architecture follows a centralized embedded system design with the 
 - **Sensor Suite**: MMA8452Q 3-axis accelerometer (I²C interface)
 - **Human Interface**: TC1602A 16×2 LCD display + WS2812B RGB LED
 - **Communications**: HC-05 Bluetooth 2.0 module (UART interface)
-- **Motor Control**: Robitronic Razer Ten ESC driving 3000kV BLDC motor
-- **Power**: LiPo 3S (11.1V) with buck regulation to 5V/3.3V
+- **Motor Control**: Robitronic Razer Ten ESC with built-in BEC driving 3000kV BLDC motor
+- **Power**: LiPo 3S (11.1V) → ESC BEC (5V) → Würth 173950378 LDO (3.3V)
 
 ### 🔌 Electrical Schematic Overview
 
@@ -57,8 +57,9 @@ The electrical design emphasizes clean power distribution and proper signal isol
 ![Electrical Schematic](./IMG/electrical_schematic.svg)
 
 **Power Distribution:**
-- **11.1V LiPo Battery** → Buck Converter (Würth 173950378) → **5V Rail**
-- **5V Rail** → Linear regulators → **3.3V Logic**
+- **11.1V LiPo Battery** → **ESC** (Robitronic Razer Ten with built-in BEC)
+- **ESC BEC Output (5V @ 3A)** → Würth 173950378 LDO → **3.3V Logic**
+- Motor receives 11.1V directly from battery through ESC
 - Separate power planes for motor and logic to minimize EMI
 
 **Signal Integrity:**
@@ -144,18 +145,18 @@ DRAGSTER/
 |-----------|-------|----------------|----------------------|
 | **Microcontroller** | STM32G431CBU6 | ARM Cortex-M4, 170 MHz, UFQFPN48, 128 KB Flash, 32 KB RAM, Hardware FPU | High processing speed for real-time sensor fusion and PWM generation; hardware floating-point unit accelerates velocity integration algorithms; 170 MHz provides sufficient headroom for Bluetooth protocol handling |
 | **Brushless Motor** | Robitronic Razer Ten 3652 3000kV (R01230) | 3000 kV, 3652 form factor, 3S LiPo compatible, 350W max power | High kV rating provides aggressive acceleration; 3S compatibility matches battery voltage; compact 3652 size fits dragster chassis constraints |
-| **ESC** | Robitronic Razer Ten ESC | PWM control 50 Hz, pulse 1–2 ms, waterproof, 60A continuous | Standard RC PWM interface simplifies firmware; 60A rating provides safety margin for peak current draws; waterproof design protects against track debris |
+| **ESC** | Robitronic Razer Ten ESC | PWM control 50 Hz, pulse 1–2 ms, waterproof, 60A continuous, **Built-in BEC: 5V @ 3A** | Standard RC PWM interface simplifies firmware; 60A rating provides safety margin for peak current draws; waterproof design protects against track debris; **Built-in BEC eliminates need for separate buck converter — provides 5V power rail for logic** |
 | **Accelerometer** | MMA8452Q | 3-axis, 12-bit resolution, I²C interface, ±8g range, 800 Hz ODR, embedded FIFO | ±8g range captures full dragster launch dynamics; 800 Hz sampling rate prevents aliasing of high-frequency vibrations; I²C interface reduces pin count; FIFO buffer offloads MCU during burst acceleration |
 | **LCD Display** | TC1602A | 16×2 characters, HD44780 controller, 4-bit parallel interface, 5V tolerant | Industry-standard HD44780 ensures driver compatibility; 4-bit mode saves GPIO pins; 16×2 layout accommodates speed/peak display; high contrast for outdoor visibility |
 | **Bluetooth Module** | HC-05 | Bluetooth 2.0 Classic SPP, UART interface, 9600 baud default, 3.3V logic, 10m range | Serial Port Profile (SPP) enables simple UART passthrough; 9600 baud sufficient for telemetry bandwidth; 3.3V logic compatible with STM32 GPIO; widely supported by PC/Android terminals |
 | **RGB LED** | WS2812B | Addressable RGB, 800 kHz PWM protocol, 5V supply, single-wire control | Addressable interface allows dynamic status indication; single-wire protocol minimizes pin usage; built-in PWM drivers offload MCU; **Note**: 5V requirement conflicts with 3.3V board supply |
 | **Battery** | LiPo 3S | 11.1V nominal (12.6V max, 9V min), 2200 mAh capacity, 25C discharge | 3S voltage matches motor/ESC specifications; 2200 mAh provides ~5 min runtime at full throttle; 25C discharge rating (55A burst) exceeds motor peak current |
-| **Buck Converter** | Würth 173950378 (replaces LMR51625) | Input: 7–36V, Output: 5V @ 3A, Switching: 2.1 MHz, Efficiency: 90% | Wide input range handles battery sag; 5V @ 3A powers LCD + logic; 2.1 MHz switching enables compact inductor; 90% efficiency minimizes heat; **Note**: Replaced LMR51625 due to footprint error |
+| **Voltage Regulator (LDO)** | Würth 173950378 | Input: 4.5–5.5V, Output: 3.3V @ 1A, Dropout: 150mV, Low noise | Converts 5V from ESC BEC to 3.3V logic level; low dropout ensures stable 3.3V even when 5V sags; low noise critical for ADC and analog sensors; compact SOT-23-5 package |
 | **Polarity Protection** | SQ2389CES-T1_GE3 | P-channel MOSFET, -20V Vds, -8A Id, 25 mΩ Rds(on) | Low on-resistance minimizes voltage drop; automotive-grade robustness; **Note**: Not populated on final board |
 
 ### 📋 PCB Design
 
-The PCB was designed entirely from scratch using **KiCad 8.0**. Before layout, **STM32CubeMX** was used to plan and verify peripheral pin assignments, ensuring no resource conflicts.
+The PCB was designed entirely from scratch using **KiCad 9.0**. Before layout, **STM32CubeMX** was used to plan and verify peripheral pin assignments, ensuring no resource conflicts.
 
 **CubeMX Configuration File:**
 ```
@@ -192,10 +193,10 @@ CAO/DRAGSTER_Cube_MX/DRAGSTER_Cube_MX.ioc
 **Component Placement:**
 - **Center**: STM32G431CBU6 (UFQFPN-48 package, 7×7 mm)
 - **Top-Left**: MMA8452Q accelerometer (QFN-16, oriented with X-axis parallel to chassis)
-- **Top-Right**: Buck converter (Würth 173950378 with input filter capacitors)
+- **Top-Right**: Würth 173950378 LDO regulator (5V to 3.3V conversion)
 - **Bottom-Left**: HC-05 Bluetooth module connector (6-pin header)
 - **Bottom-Right**: LCD interface connector (8-pin header: 4 data + RS/E/VCC/GND)
-- **Right Edge**: ESC PWM output (3-pin servo connector)
+- **Right Edge**: ESC PWM output (3-pin servo connector) + 5V BEC input from ESC
 - **Left Edge**: JTAG/SWD debug header (10-pin Cortex standard)
 
 **Bottom Layer (Connector Side):**
@@ -223,7 +224,7 @@ CAO/DRAGSTER_Cube_MX/DRAGSTER_Cube_MX.ioc
 ![Real PCB — with components](IMG/mounted.jpeg)
 
 **Assembly Notes:**
-- All SMD components hand-soldered using hot air rework station
+- All SMD components hand-soldered using hot air rework station and an oven
 - UFQFPN-48 package required careful alignment and flux application
 - 0402 resistors/capacitors used for space efficiency
 - Through-hole connectors added last to prevent mechanical stress during SMD soldering
@@ -650,7 +651,7 @@ Conversion to km/h: `speed_kmh = speed_ms × 3.6`
 
 **Fix for Next Revision:**
 - Add 3.3V → 5V level shifter (e.g., 74HCT125) on PWM data line
-- Route 5V from buck converter output to LED VDD
+- Route 5V from ESC BEC output to LED VDD
 - Alternatively, replace WS2812B with APA102 (tolerates 3.3V logic)
 
 ---
@@ -828,9 +829,8 @@ BLDC Motor (3000 kV, 11.1V)
 
 | Issue | Status | Impact | Planned Fix |
 |-------|--------|--------|-------------|
-| **NeoPixel not lighting** | ⚠️ Known | WS2812B wired to 3.3V (requires 5V minimum) | PCB v2: Add 74HCT125 level shifter + route 5V supply |
+| **NeoPixel not lighting** | ⚠️ Known | WS2812B wired to 3.3V (requires 5V minimum) | PCB v2: Add 74HCT125 level shifter + route 5V from ESC BEC |
 | **Reverse polarity protection** | ⚠️ Not populated | SQ2389CES-T1_GE3 footprint present but component not soldered | Populate MOSFET in next build (low priority, battery connector keyed) |
-| **Buck regulator replacement** | ✅ Fixed | LMR51625 footprint error (pin 1 silkscreen mismatch) | Replaced with Würth 173950378, confirmed functional |
 | **iOS Bluetooth incompatibility** | ❌ By design | HC-05 uses Classic SPP (iOS restricts to MFi accessories) | No fix planned — use Android or Windows for control |
 | **Accelerometer drift** | 🔄 Minor | Velocity integration accumulates error over long runs (±5% after 30 s) | Implement periodic GPS reset or IMU fusion (out of scope) |
 | **Belt tension adjustment** | 🔄 Minor | No tensioner mechanism — belt must be manually adjusted | Design spring-loaded motor mount for PCB v2 |
@@ -840,9 +840,10 @@ BLDC Motor (3000 kV, 11.1V)
 ## 🎓 Lessons Learned
 
 ### PCB Design
-- **Always verify component footprints** in 3D before ordering (LMR51625 footprint error cost 1 week)
+- **Always verify component footprints** in 3D before ordering to catch errors early
 - **Design for testability**: Add test points on all power rails and critical signals
 - **Plan for mistakes**: Include unpopulated footprints for optional features (e.g., polarity protection)
+- **Understand your power architecture**: The ESC BEC provides 5V, eliminating the need for a separate buck converter
 
 ### Firmware
 - **Start ESC PWM immediately** after timer init — ESCs have <2 s timeout for signal detection
@@ -879,7 +880,7 @@ BLDC Motor (3000 kV, 11.1V)
 ---
 
 **School:** ENSEA — Maker Option Project  
-**Academic Year:** 2025-2026  
+**Academic Year:** 2025–2026  
 **Target MCU:** STM32G431CBU6 @ 170 MHz  
 **Development Tools:** STM32CubeIDE, KiCad 9.0, Onshape  
 **Control Interface:** Tera Term (Windows) / Serial Bluetooth Terminal (Android)  

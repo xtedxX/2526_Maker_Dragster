@@ -1,6 +1,6 @@
 <svg width="100%" viewBox="0 0 680 620" role="img" xmlns="http://www.w3.org/2000/svg">
 <title>Dragster System Diagram</title>
-<desc>Block diagram showing the dragster's main board with STM32 microcontroller, peripheral sensors, power distribution, and communication links to Bluetooth control</desc>
+<desc>Block diagram showing the dragster's main board with STM32 microcontroller, peripheral sensors, power distribution from ESC BEC, and communication links</desc>
 
 <style>
   .t { font-family: sans-serif; font-size: 14px; fill: #3d3d3a; }
@@ -35,6 +35,7 @@
     .t { fill: #c2c0b6; }
     .ts { fill: #9c9a92; }
     .th { fill: #e8e6dc; }
+    .arr { stroke: #9c9a92; }
     .c-gray rect, .c-gray circle { fill: #444441; stroke: #D3D1C7; }
     .c-gray .th, .c-gray .t { fill: #F1EFE8; }
     .c-gray .ts { fill: #D3D1C7; }
@@ -103,19 +104,19 @@
   <rect x="170" y="240" width="200" height="64" rx="8" stroke-width="0.5"/>
   <text class="th" x="270" y="260" text-anchor="middle" dominant-baseline="central">STM32G431CBU6</text>
   <text class="ts" x="270" y="278" text-anchor="middle" dominant-baseline="central">ARM Cortex-M4 @ 170 MHz</text>
-  <text class="ts" x="270" y="293" text-anchor="middle" dominant-baseline="central">Emitter</text>
+  <text class="ts" x="270" y="293" text-anchor="middle" dominant-baseline="central">Main Controller</text>
 </g>
 
 <!-- I2C connections -->
-<line x1="130" y1="196" x2="130" y2="220" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="110" y="214" text-anchor="end">I²C</text>
+<path d="M 130 196 L 130 220 L 200 220 L 200 240" fill="none" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="ts" x="145" y="214" text-anchor="start">I²C</text>
 
 <!-- GPIO connections -->
 <line x1="270" y1="196" x2="270" y2="240" class="arr" marker-end="url(#arrow)"/>
 <text class="ts" x="286" y="220" text-anchor="start">GPIO</text>
 
 <!-- PWM to NeoPixel -->
-<line x1="380" y1="196" x2="340" y2="220" class="arr" marker-end="url(#arrow)"/>
+<path d="M 380 196 L 340 220 L 340 240" fill="none" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
 <text class="ts" x="360" y="214">PWM</text>
 
 <!-- Bluetooth Module -->
@@ -126,51 +127,60 @@
 </g>
 
 <!-- UART connection -->
-<line x1="170" y1="290" x2="130" y2="360" class="arr" marker-end="url(#arrow)"/>
+<path d="M 170 290 L 130 290 L 130 360" fill="none" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
 <text class="ts" x="145" y="330" text-anchor="middle">UART</text>
 
-<!-- ESC -->
+<!-- Voltage Regulator -->
+<g class="c-amber">
+  <rect x="210" y="360" width="120" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="270" y="380" text-anchor="middle" dominant-baseline="central">Würth 173950378</text>
+  <text class="ts" x="270" y="398" text-anchor="middle" dominant-baseline="central">5V → 3.3V</text>
+</g>
+
+<!-- 5V to Regulator -->
+<line x1="270" y1="360" x2="270" y2="304" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="250" y="335">3.3V</text>
+
+<!-- ESC (outside main board, bottom left) -->
 <g class="c-coral">
-  <rect x="350" y="360" width="120" height="56" rx="8" stroke-width="0.5"/>
-  <text class="th" x="410" y="380" text-anchor="middle" dominant-baseline="central">Razer ESC</text>
-  <text class="ts" x="410" y="398" text-anchor="middle" dominant-baseline="central">PWM Control</text>
+  <rect x="70" y="540" width="140" height="64" rx="8" stroke-width="0.5"/>
+  <text class="th" x="140" y="560" text-anchor="middle" dominant-baseline="central">Razer Ten ESC</text>
+  <text class="ts" x="140" y="578" text-anchor="middle" dominant-baseline="central">PWM Control</text>
+  <text class="ts" x="140" y="593" text-anchor="middle" dominant-baseline="central">Built-in BEC 5V</text>
 </g>
 
 <!-- PWM to ESC -->
-<line x1="340" y1="290" x2="380" y2="360" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="365" y="330" text-anchor="middle">PWM</text>
+<path d="M 170 304 L 140 304 L 140 470 L 140 540" fill="none" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="ts" x="155" y="400" text-anchor="start">PWM</text>
 
-<!-- Power -->
-<g class="c-amber">
-  <rect x="210" y="430" width="120" height="56" rx="8" stroke-width="0.5"/>
-  <text class="th" x="270" y="450" text-anchor="middle" dominant-baseline="central">Buck Conv.</text>
-  <text class="ts" x="270" y="468" text-anchor="middle" dominant-baseline="central">7.4V → 5V/3.3V</text>
-</g>
+<!-- 5V from ESC BEC to regulator -->
+<path d="M 210 572 L 270 572 L 270 500 L 270 416" fill="none" stroke="#FA9F27" stroke-width="2" marker-end="url(#arrow)"/>
+<text class="ts" x="240" y="490" text-anchor="middle">5V from BEC</text>
 
-<!-- Power to STM32 -->
-<line x1="270" y1="430" x2="270" y2="304" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="250" y="370">3.3V</text>
-
-<!-- Battery -->
+<!-- Battery (bottom center) -->
 <g class="c-green">
-  <rect x="210" y="540" width="120" height="44" rx="8" stroke-width="0.5"/>
-  <text class="th" x="270" y="562" text-anchor="middle" dominant-baseline="central">LiPo 3S (11.1V)</text>
+  <rect x="270" y="540" width="120" height="44" rx="8" stroke-width="0.5"/>
+  <text class="th" x="330" y="562" text-anchor="middle" dominant-baseline="central">LiPo 3S (11.1V)</text>
 </g>
 
-<!-- Battery to Buck -->
-<line x1="270" y1="540" x2="270" y2="486" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="285" y="515">7.4V</text>
+<!-- Battery to ESC -->
+<path d="M 270 562 L 210 562" fill="none" stroke="#639922" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text class="ts" x="240" y="555">11.1V</text>
 
-<!-- BLDC Motor -->
+<!-- BLDC Motor (bottom right) -->
 <g class="c-coral">
-  <rect x="550" y="360" width="110" height="56" rx="8" stroke-width="0.5"/>
-  <text class="th" x="605" y="380" text-anchor="middle" dominant-baseline="central">BLDC Motor</text>
-  <text class="ts" x="605" y="398" text-anchor="middle" dominant-baseline="central">3000 kV</text>
+  <rect x="450" y="540" width="110" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="505" y="560" text-anchor="middle" dominant-baseline="central">BLDC Motor</text>
+  <text class="ts" x="505" y="578" text-anchor="middle" dominant-baseline="central">3000 kV</text>
 </g>
 
-<!-- ESC to Motor -->
-<line x1="470" y1="388" x2="550" y2="388" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="510" y="404">3-phase</text>
+<!-- ESC to Motor (3-phase) -->
+<path d="M 210 572 L 240 572 L 240 530 L 480 530 L 480 540" fill="none" stroke="#D85A30" stroke-width="2" marker-end="url(#arrow)"/>
+<text class="ts" x="360" y="525">3-phase</text>
+
+<!-- Battery to Motor via ESC -->
+<path d="M 390 562 L 420 562 L 420 520 L 490 520 L 490 540" fill="none" stroke="#639922" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text class="ts" x="420" y="515">11.1V</text>
 
 <!-- Phone/PC Control -->
 <g class="c-blue">
