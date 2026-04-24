@@ -258,8 +258,8 @@ CAO/DRAGSTER_Cube_MX/DRAGSTER_Cube_MX.ioc
 | **GPIO Input** | PB9 | Accelerometer INT2 (motion detect) | Pull-down, EXTI interrupt (unused) |
 
 **Clock Configuration:**
-- **HSE**: 8 MHz external crystal oscillator
-- **PLL**: Input 8 MHz → PLLM /1 → VCO 680 MHz → PLLN ×85 → PLLP /4 → **170 MHz System Clock**
+- **HSE**: 16 MHz external crystal oscillator
+- **PLL**: Input 16 MHz → PLLM /1 → VCO 680 MHz → PLLN ×85 → PLLP /4 → **170 MHz System Clock**
 - **APB1**: 85 MHz (TIM2/3 at 170 MHz after prescaler doubling)
 - **APB2**: 170 MHz (high-speed peripherals)
 - **AHB**: 170 MHz (CPU, DMA, memory)
